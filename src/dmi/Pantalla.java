@@ -23,6 +23,7 @@ public class Pantalla extends JFrame{
 	Velocidad vel;
 	JLabel spd;
 	JLabel modo;
+	JLabel dr;
 	float scale = /*1.3f*/ 1f;
 	public static Archivo arc = new Archivo();
 	int getScale(double val)
@@ -79,6 +80,13 @@ public class Pantalla extends JFrame{
 		 updateModo(1);
 		 add(modo);
 		 modo.setBounds(getScale(centx-60), getScale(centy), getScale(120), getScale(30));
+		 
+		 dr = new JLabel();
+		 dr.setIcon(new ImageIcon(getClass().getResource("/dmi/SignalType1.PNG")));
+		 Border c = BorderFactory.createLineBorder(Color.WHITE);
+		 dr.setBorder(c);
+		 add(dr);
+		 dr.setBounds(getScale(100), getScale(320), getScale(42), getScale(42));
 		 
 		 JLabel vigil = new JLabel();
 		 vigil.setIcon(new ImageIcon(getClass().getResource("/dmi/vigilancia.JPG")));
