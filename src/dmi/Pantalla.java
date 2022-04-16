@@ -31,7 +31,7 @@ public class Pantalla extends JFrame{
 	}
 	public Pantalla() {
 		 setTitle("VELOCIMETRO");
-		 setSize(getScale(450), getScale(350));
+		 setSize(getScale(465), getScale(550));
 		 setVisible(true);
 		 setResizable(false);
 		 //setExtendedState(JFrame.MAXIMIZED_BOTH);
