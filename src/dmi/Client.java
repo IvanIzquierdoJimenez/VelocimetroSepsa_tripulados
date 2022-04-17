@@ -44,7 +44,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	void sendData(String s)
+	public void sendData(String s)
 	{
 		s = s+'\n';
 		try {
@@ -54,7 +54,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	String readData()
+	public String readData()
 	{
 		try {
 			return in.readLine();

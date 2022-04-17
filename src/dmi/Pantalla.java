@@ -17,10 +17,10 @@ public class Pantalla extends JFrame{
 
 	int AngIni = -29;
 	int Ang = 238;
-	int div = 2;
+	int div = 1;
 	float v_pref = 0;
 	static float v_act = 0;
-	static int v_max = 160;
+	public int v_max = 160;
 	int centx = 225;
 	int centy = 175+40;
 	Velocidad vel;
@@ -37,7 +37,7 @@ public class Pantalla extends JFrame{
 	{
 		return (int)Math.round(val*scale);
 	}
-	public Pantalla() {
+	public Pantalla(int vmax) {
 		 setTitle("VELOCIMETRO");
 		 setSize(getScale(465), getScale(550));
 		 setVisible(true);
@@ -47,6 +47,7 @@ public class Pantalla extends JFrame{
 		 getContentPane().setBackground(Color.BLACK);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 setLayout(null);
+		 v_max = vmax;
 		 PanelDisplay();
 		 getContentPane().add(panel);
 		 /*vel = new Velocidad(this);
@@ -216,7 +217,7 @@ public class Pantalla extends JFrame{
 	}
 	public static void main(String[] args) throws InterruptedException
 	{
-		String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
+		/*String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
 		v_max = Integer.parseInt(Conf[0]);
 		Pantalla p = new Pantalla();
 		Client c = new Client();
@@ -250,6 +251,6 @@ public class Pantalla extends JFrame{
 			{
 				p.updateSymbol(Integer.parseInt(s.substring(7)));
 			}
-		}
+		}*/
 	}
 }
