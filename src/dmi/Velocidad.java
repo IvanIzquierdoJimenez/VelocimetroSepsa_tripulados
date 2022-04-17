@@ -34,7 +34,6 @@ public class Velocidad extends JLabel {
 		int h = w;
 		g.drawArc(x, y, w, h, 180-a0, -fin);
 	}
-	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.WHITE);

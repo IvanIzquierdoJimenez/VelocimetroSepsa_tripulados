@@ -1,6 +1,7 @@
 package dmi;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,12 +10,13 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import java.awt.*;
+import java.util.TimerTask;
 
 public class Pantalla extends JFrame{
 
 	int AngIni = -29;
 	int Ang = 238;
-	int div = 1/*1.025f*/;
+	int div = 2;
 	float v_pref = 0;
 	static float v_act = 0;
 	static int v_max = 160;
@@ -23,7 +25,10 @@ public class Pantalla extends JFrame{
 	Velocidad vel;
 	JLabel spd;
 	JLabel modo;
-	JLabel dr;
+	JLabel symb;
+	JLabel dr = new JLabel();
+	Border c;
+	Icon[] iconmodo;
 	float scale = /*1.3f*/ 1f;
 	public static Archivo arc = new Archivo();
 	int getScale(double val)
@@ -39,6 +44,7 @@ public class Pantalla extends JFrame{
 		 getContentPane().setBackground(Color.BLACK);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 setLayout(null);
+		 //setUndecorated(true);
 		 vel = new Velocidad(this);
 		 add(vel);
 		 vel.setBounds(0, 0, getScale(450), getScale(350));
@@ -81,15 +87,22 @@ public class Pantalla extends JFrame{
 		 add(modo);
 		 modo.setBounds(getScale(centx-60), getScale(centy), getScale(120), getScale(30));
 		 
-		 dr = new JLabel();
-		 dr.setIcon(new ImageIcon(getClass().getResource("/dmi/SignalType1.PNG")));
-		 Border c = BorderFactory.createLineBorder(Color.WHITE);
-		 dr.setBorder(c);
+		 Border sm = BorderFactory.createLineBorder(Color.WHITE);
+		 JLabel symb = new JLabel();
+		 symb.setBorder(sm);
+		 add(symb);
+		 symb.setBounds(getScale(300), getScale(300), getScale(32), getScale(32));
+		 
+		 iconmodo = new ImageIcon[3];
+		 iconmodo[0] = new ImageIcon(getClass().getResource("/dmi/MO_13.jpg"));
+		 iconmodo[1] = new ImageIcon(getClass().getResource("/dmi/MO_16.jpg"));
+		 iconmodo[2] = new ImageIcon(getClass().getResource("/dmi/MO_19.jpg"));
 		 add(dr);
-		 dr.setBounds(getScale(100), getScale(320), getScale(42), getScale(42));
+		 
+		 //updateSymbol(0);
 		 
 		 JLabel vigil = new JLabel();
-		 vigil.setIcon(new ImageIcon(getClass().getResource("/dmi/vigilancia.JPG")));
+		 vigil.setIcon(new ImageIcon(getClass().getResource("../dmi/vigilancia.JPG")));
 		 add(vigil);
 		 vigil.setBounds(getScale(10), getScale(10), getScale(50), getScale(44));
 	}
@@ -109,6 +122,11 @@ public class Pantalla extends JFrame{
 	public void updateModo(int curr)
 	{
 		modo.setText(modos[curr]);
+	}
+	public void updateSymbol(int curr)
+	{
+		dr.setIcon(iconmodo[curr]);
+		dr.setBounds(getScale(300), getScale(300), getScale(32), getScale(32));
 	}
 	public boolean TestInit(Pantalla p) throws InterruptedException
 	{
@@ -133,7 +151,7 @@ public class Pantalla extends JFrame{
 	}
 	public static void main(String[] args) throws InterruptedException
 	{
-		String[] Conf = arc.ReadConfig("../SEPSA-Velocimetro/config.txt");
+		String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
 		v_max = Integer.parseInt(Conf[0]);
 		Pantalla p = new Pantalla();
 		Client c = new Client();
@@ -141,10 +159,12 @@ public class Pantalla extends JFrame{
 		c.sendData("register(speed)");
 		c.sendData("register(cruise_speed)");
 		c.sendData("register(mode)");
+		c.sendData("register(symbol)");
 		if(p.TestInit(p) == true);
 		else return;
 		Thread.sleep(100);
 		p.updateModo(Integer.parseInt(Conf[1]));
+		p.updateSymbol(0);
 		while(true)
 		{
 			String s = c.readData();
@@ -160,6 +180,10 @@ public class Pantalla extends JFrame{
 			else if(s.startsWith("mode="))
 			{
 				p.updateModo(Integer.parseInt(s.substring(5)));
+			}
+			else if(s.startsWith("symbol="))
+			{
+				p.updateSymbol(Integer.parseInt(s.substring(7)));
 			}
 		}
 	}
