@@ -28,9 +28,12 @@ public class Pantalla extends JFrame{
 	JLabel modo;
 	JLabel symb;
 	JLabel dr = new JLabel();
+	JLabel lv = new JLabel();
 	Border c;
+	Border rect;
 	JPanel panel = new JPanel();
 	Icon[] iconmodo;
+	Icon[] level_s;
 	float scale = /*1.3f*/ 1f;
 	public static Archivo arc = new Archivo();
 	int getScale(double val)
@@ -40,76 +43,15 @@ public class Pantalla extends JFrame{
 	public Pantalla(int vmax) {
 		 setTitle("VELOCIMETRO");
 		 setSize(getScale(465), getScale(550));
+		 setUndecorated(true);
 		 setVisible(true);
 		 setResizable(false);
-		 //setUndecorated(true);
 		 //setExtendedState(JFrame.MAXIMIZED_BOTH);
-		 getContentPane().setBackground(Color.BLACK);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 setLayout(null);
 		 v_max = vmax;
+		 add(panel);
 		 PanelDisplay();
-		 getContentPane().add(panel);
-		 /*vel = new Velocidad(this);
-		 add(vel);
-		 vel.setBounds(0, 0, getScale(450), getScale(350));
-		 for(int i=0; i<=v_max; i+=10)
-		 {
-			 JLabel j = new JLabel(Integer.toString(i));
-			 j.setFont(new Font("Arial", Font.PLAIN, getScale(20)));
-			 j.setForeground(Color.YELLOW);
-			 j.setHorizontalAlignment(SwingConstants.CENTER);
-			 int r = 125;
-			 if(i<100) r = 130;
-			 if(i==0) r = 135;
-			 double cx = centx - r*Math.cos(Math.toRadians(AngIni+i/(float)v_max*Ang));
-			 double cy = centy - r*Math.sin(Math.toRadians(AngIni+i/(float)v_max*Ang));
-			 add(j);
-			 j.setBounds(getScale(cx-25), getScale(cy-10), getScale(50), getScale(20));
-		 }
-		 spd = new JLabel(Integer.toString(Math.round(v_act)));
-		 spd.setFont(new Font("Arial", Font.PLAIN, getScale(26)));
-		 spd.setForeground(Color.GREEN);
-		 spd.setHorizontalAlignment(SwingConstants.RIGHT);
-		 Border b = BorderFactory.createLineBorder(Color.RED);
-		 spd.setBorder(b);
-		 add(spd);
-		 spd.setBounds(getScale(centx-30), getScale(centy-70), getScale(60), getScale(30));
-		 
-		 JLabel unit = new JLabel("km/h");
-		 unit.setFont(new Font("Arial", Font.PLAIN, getScale(20)));
-		 unit.setForeground(Color.BLUE);
-		 unit.setHorizontalAlignment(SwingConstants.CENTER);
-		 add(unit);
-		 unit.setBounds(getScale(centx-40), getScale(centy-40), getScale(80), getScale(30));
-		 
-		 modo = new JLabel();
-		 modo.setFont(new Font("Arial", Font.PLAIN, getScale(14)));
-		 modo.setForeground(Color.YELLOW);
-		 modo.setHorizontalAlignment(SwingConstants.CENTER);
-		 modo.setBorder(b);
-		 updateModo(1);
-		 add(modo);
-		 modo.setBounds(getScale(centx-60), getScale(centy), getScale(120), getScale(30));
-		 
-		 Border sm = BorderFactory.createLineBorder(Color.WHITE);
-		 JLabel symb = new JLabel();
-		 symb.setBorder(sm);
-		 add(symb);
-		 symb.setBounds(getScale(300), getScale(300), getScale(32), getScale(32));
-		 
-		 iconmodo = new ImageIcon[3];
-		 iconmodo[0] = new ImageIcon(getClass().getResource("/dmi/MO_13.jpg"));
-		 iconmodo[1] = new ImageIcon(getClass().getResource("/dmi/MO_16.jpg"));
-		 iconmodo[2] = new ImageIcon(getClass().getResource("/dmi/MO_19.jpg"));
-		 add(dr);
-		 
-		 //updateSymbol(0);
-		 
-		 JLabel vigil = new JLabel();
-		 vigil.setIcon(new ImageIcon(getClass().getResource("../dmi/vigilancia.JPG")));
-		 add(vigil);
-		 vigil.setBounds(getScale(10), getScale(10), getScale(50), getScale(44));*/
 	}
 	public void updateReal(float curr)
 	{
@@ -133,6 +75,13 @@ public class Pantalla extends JFrame{
 		dr.setIcon(iconmodo[curr]);
 		dr.setBounds(getScale(300), getScale(300), getScale(32), getScale(32));
 	}
+	public void updateLevel(int curr)
+	{
+		lv.setIcon(level_s[curr]);
+		lv.setHorizontalAlignment(JLabel.CENTER);
+	    lv.setVerticalAlignment(JLabel.CENTER);
+		lv.setBounds(getScale(195), getScale(300), getScale(62), getScale(32));
+	}
 	public boolean TestInit(Pantalla p) throws InterruptedException
 	{
 		for(int i = 0; i <= v_max; i++)
@@ -154,10 +103,13 @@ public class Pantalla extends JFrame{
 		}
 		return true;
 	}
-	public void PanelDisplay() 
+	public void PanelDisplay()
 	{
-		vel = new Velocidad(this);
-		 add(vel);
+		 panel.setBackground(Color.BLACK);
+		 panel.setSize(getScale(465), getScale(550));
+		 vel = new Velocidad(this);
+		 panel.setLayout(null);
+		 panel.add(vel);
 		 vel.setBounds(0, 0, getScale(450), getScale(350));
 		 for(int i=0; i<=v_max; i+=10)
 		 {
@@ -170,7 +122,7 @@ public class Pantalla extends JFrame{
 			 if(i==0) r = 135;
 			 double cx = centx - r*Math.cos(Math.toRadians(AngIni+i/(float)v_max*Ang));
 			 double cy = centy - r*Math.sin(Math.toRadians(AngIni+i/(float)v_max*Ang));
-			 add(j);
+			 panel.add(j);
 			 j.setBounds(getScale(cx-25), getScale(cy-10), getScale(50), getScale(20));
 		 }
 		 spd = new JLabel(Integer.toString(Math.round(v_act)));
@@ -179,14 +131,14 @@ public class Pantalla extends JFrame{
 		 spd.setHorizontalAlignment(SwingConstants.RIGHT);
 		 Border b = BorderFactory.createLineBorder(Color.RED);
 		 spd.setBorder(b);
-		 add(spd);
+		 panel.add(spd);
 		 spd.setBounds(getScale(centx-30), getScale(centy-70), getScale(60), getScale(30));
 		 
 		 JLabel unit = new JLabel("km/h");
 		 unit.setFont(new Font("Arial", Font.PLAIN, getScale(20)));
 		 unit.setForeground(Color.BLUE);
 		 unit.setHorizontalAlignment(SwingConstants.CENTER);
-		 add(unit);
+		 panel.add(unit);
 		 unit.setBounds(getScale(centx-40), getScale(centy-40), getScale(80), getScale(30));
 		 
 		 modo = new JLabel();
@@ -195,62 +147,35 @@ public class Pantalla extends JFrame{
 		 modo.setHorizontalAlignment(SwingConstants.CENTER);
 		 modo.setBorder(b);
 		 updateModo(1);
-		 add(modo);
+		 panel.add(modo);
 		 modo.setBounds(getScale(centx-60), getScale(centy), getScale(120), getScale(30));
+		 
+		 Border sl = BorderFactory.createLineBorder(Color.WHITE);
+		 JLabel level = new JLabel();
+		 level.setBorder(sl);
+		 panel.add(level);
+		 level.setBounds(getScale(195), getScale(300), getScale(62), getScale(32));
 		 
 		 Border sm = BorderFactory.createLineBorder(Color.WHITE);
 		 JLabel symb = new JLabel();
 		 symb.setBorder(sm);
-		 add(symb);
+		 panel.add(symb);
 		 symb.setBounds(getScale(300), getScale(300), getScale(32), getScale(32));
+		 
+		 level_s = new ImageIcon[2];
+		 level_s[0] = new ImageIcon(getClass().getResource("/dmi/LE_01.jpg"));
+		 level_s[1] = new ImageIcon(getClass().getResource("/dmi/LE_02.jpg"));
+		 panel.add(lv);
 		 
 		 iconmodo = new ImageIcon[3];
 		 iconmodo[0] = new ImageIcon(getClass().getResource("/dmi/MO_13.jpg"));
 		 iconmodo[1] = new ImageIcon(getClass().getResource("/dmi/MO_16.jpg"));
 		 iconmodo[2] = new ImageIcon(getClass().getResource("/dmi/MO_19.jpg"));
-		 add(dr);
+		 panel.add(dr);
 		 
 		 JLabel vigil = new JLabel();
 		 vigil.setIcon(new ImageIcon(getClass().getResource("../dmi/vigilancia.JPG")));
-		 add(vigil);
+		 panel.add(vigil);
 		 vigil.setBounds(getScale(10), getScale(10), getScale(50), getScale(44));
-	}
-	public static void main(String[] args) throws InterruptedException
-	{
-		/*String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
-		v_max = Integer.parseInt(Conf[0]);
-		Pantalla p = new Pantalla();
-		Client c = new Client();
-		p.updateModo(0);
-		c.sendData("register(speed)");
-		c.sendData("register(cruise_speed)");
-		c.sendData("register(mode)");
-		c.sendData("register(symbol)");
-		if(p.TestInit(p) == true);
-		else return;
-		Thread.sleep(100);
-		p.updateModo(Integer.parseInt(Conf[1]));
-		p.updateSymbol(0);
-		while(true)
-		{
-			String s = c.readData();
-			if(s==null) return;
-			if(s.startsWith("speed="))
-			{
-				p.updateReal(Float.parseFloat(s.substring(6).replace(',', '.')));
-			}
-			else if(s.startsWith("cruise_speed="))
-			{
-				p.updatePrefijada(Float.parseFloat(s.substring(13).replace(',', '.')));
-			}
-			else if(s.startsWith("mode="))
-			{
-				p.updateModo(Integer.parseInt(s.substring(5)));
-			}
-			else if(s.startsWith("symbol="))
-			{
-				p.updateSymbol(Integer.parseInt(s.substring(7)));
-			}
-		}*/
 	}
 }

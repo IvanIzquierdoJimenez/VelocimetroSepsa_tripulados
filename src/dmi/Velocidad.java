@@ -57,7 +57,7 @@ public class Velocidad extends JLabel {
 		for(int i=0; i+1<p.v_pref; i+=p.div)
 		{
 			g2d.fill(pref);
-			g2d.rotate(Math.toRadians(p.Ang/(float)p.v_max*p.div));
+			g2d.rotate(Math.toRadians(p.Ang/(float)p.v_max*p.div+0.025));
 		}
 		
 		g2d.setTransform(transf);
@@ -66,7 +66,7 @@ public class Velocidad extends JLabel {
 		for(int i=0; i+1<p.v_act; i+=p.div)
 		{
 			g2d.fill(spd);
-			g2d.rotate(Math.toRadians(p.Ang/(float)p.v_max*p.div));
+			g2d.rotate(Math.toRadians(p.Ang/(float)p.v_max*p.div+0.025));
 		}
 		
 		g2d.setTransform(transf);
