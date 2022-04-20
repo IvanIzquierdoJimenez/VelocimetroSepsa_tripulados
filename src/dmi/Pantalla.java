@@ -106,24 +106,43 @@ public class Pantalla extends JFrame{
 			else if(status == 0) ASFA_Frenar.setVisible(false);
 			break;
 		case 1:
-			ASFA_VLC.setIcon(ASFA[1]);
-			panel.add(ASFA_VLC);
-			ASFA_VLC.setBounds(getScale(130), getScale(360), getScale(60), getScale(60));
+			if(status == 1)
+			{
+				ASFA_VLC.setIcon(ASFA[1]);
+				ASFA_VLC.setVisible(true);
+				panel.add(ASFA_VLC);
+				ASFA_VLC.setBounds(getScale(130), getScale(360), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_VLC.setVisible(false);
 			break;
 		case 2:
-			 ASFA_Parada.setIcon(ASFA[2]);
-			 panel.add(ASFA_Parada);
-			 ASFA_Parada.setBounds(getScale(195), getScale(360), getScale(60), getScale(60));
-			 break;
+			if(status == 1)
+			{
+				ASFA_Parada.setIcon(ASFA[2]);
+				ASFA_Parada.setVisible(true);
+				panel.add(ASFA_Parada);
+				ASFA_Parada.setBounds(getScale(195), getScale(360), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Parada.setVisible(false);
+			break;
 		case 3:
-			 ASFA_VL.setIcon(ASFA[3]);
-			 panel.add(ASFA_VL);
-			 ASFA_VL.setBounds(getScale(260), getScale(360), getScale(60), getScale(60));
+			if(status == 1)
+			{
+				ASFA_VL.setIcon(ASFA[3]);
+				ASFA_VL.setVisible(true);
+				panel.add(ASFA_VL);
+				ASFA_VL.setBounds(getScale(260), getScale(360), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_VL.setVisible(false);
 			break;
 		case 4:
-			 ASFA_CV.setIcon(ASFA[4]);
-			 panel.add(ASFA_CV);
-			 ASFA_CV.setBounds(getScale(325), getScale(360), getScale(60), getScale(60));
+			if(status == 1)
+			{
+				ASFA_CV.setIcon(ASFA[4]);
+				panel.add(ASFA_CV);
+				ASFA_CV.setBounds(getScale(325), getScale(360), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_CV.setVisible(false);
 			break;
 		}
 	}
