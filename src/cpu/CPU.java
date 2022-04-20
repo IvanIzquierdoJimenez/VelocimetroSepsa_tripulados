@@ -21,6 +21,7 @@ public class CPU {
 		c.sendData("register(mode)");
 		c.sendData("register(symbol)");
 		c.sendData("register(level)");
+		c.sendData("register(ASFA_icon)");
 		if(p.TestInit(p) == true);
 		else return;
 		Thread.sleep(100);
@@ -50,6 +51,11 @@ public class CPU {
 			else if(s.startsWith("level="))
 			{
 				p.updateLevel(Integer.parseInt(s.substring(6)));
+			}
+			else if(s.startsWith("ASFA_icon="))
+			{
+				String[] val = s.substring(10).split("");
+				p.updateASFA(Integer.parseInt(val[0]), Integer.parseInt(val[1]));
 			}
 		}
 	}

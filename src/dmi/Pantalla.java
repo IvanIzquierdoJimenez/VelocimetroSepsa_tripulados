@@ -36,6 +36,11 @@ public class Pantalla extends JFrame{
 	Icon[] iconmodo;
 	Icon[] level_s;
 	Icon[] ASFA;
+	JLabel ASFA_Frenar = new JLabel();
+	JLabel ASFA_VLC = new JLabel();
+	JLabel ASFA_Parada = new JLabel();
+	JLabel ASFA_VL = new JLabel();
+	JLabel ASFA_CV = new JLabel();
 	float scale = /*1.3f*/ 1f;
 	public static Archivo arc = new Archivo();
 	int getScale(double val)
@@ -85,6 +90,42 @@ public class Pantalla extends JFrame{
 		lv.setHorizontalAlignment(JLabel.CENTER);
 	    lv.setVerticalAlignment(JLabel.CENTER);
 		lv.setBounds(getScale(195), getScale(300), getScale(62), getScale(32));
+	}
+	public void updateASFA(int curr, int status)
+	{
+		switch(curr) 
+		{
+		case 0:
+			if(status == 1)
+			{
+				ASFA_Frenar.setIcon(ASFA[0]);
+				ASFA_Frenar.setVisible(true);
+				panel.add(ASFA_Frenar);
+				ASFA_Frenar.setBounds(getScale(65), getScale(360), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Frenar.setVisible(false);
+			break;
+		case 1:
+			ASFA_VLC.setIcon(ASFA[1]);
+			panel.add(ASFA_VLC);
+			ASFA_VLC.setBounds(getScale(130), getScale(360), getScale(60), getScale(60));
+			break;
+		case 2:
+			 ASFA_Parada.setIcon(ASFA[2]);
+			 panel.add(ASFA_Parada);
+			 ASFA_Parada.setBounds(getScale(195), getScale(360), getScale(60), getScale(60));
+			 break;
+		case 3:
+			 ASFA_VL.setIcon(ASFA[3]);
+			 panel.add(ASFA_VL);
+			 ASFA_VL.setBounds(getScale(260), getScale(360), getScale(60), getScale(60));
+			break;
+		case 4:
+			 ASFA_CV.setIcon(ASFA[4]);
+			 panel.add(ASFA_CV);
+			 ASFA_CV.setBounds(getScale(325), getScale(360), getScale(60), getScale(60));
+			break;
+		}
 	}
 	public boolean TestInit(Pantalla p) throws InterruptedException
 	{
@@ -190,29 +231,5 @@ public class Pantalla extends JFrame{
 		 panel.add(vigil);
 		 vigil.setBounds(getScale(10), getScale(10), getScale(50), getScale(44));
 		 
-		 JLabel ASFA_Frenar = new JLabel();
-		 ASFA_Frenar.setIcon(ASFA[0]);
-		 panel.add(ASFA_Frenar);
-		 ASFA_Frenar.setBounds(getScale(65), getScale(360), getScale(60), getScale(60));
-		 
-		 JLabel ASFA_VLC = new JLabel();
-		 ASFA_VLC.setIcon(ASFA[1]);
-		 panel.add(ASFA_VLC);
-		 ASFA_VLC.setBounds(getScale(130), getScale(360), getScale(60), getScale(60));
-		 
-		 JLabel ASFA_Parada = new JLabel();
-		 ASFA_Parada.setIcon(ASFA[2]);
-		 panel.add(ASFA_Parada);
-		 ASFA_Parada.setBounds(getScale(195), getScale(360), getScale(60), getScale(60));
-		 
-		 JLabel ASFA_VL = new JLabel();
-		 ASFA_VL.setIcon(ASFA[3]);
-		 panel.add(ASFA_VL);
-		 ASFA_VL.setBounds(getScale(260), getScale(360), getScale(60), getScale(60));
-		 
-		 JLabel ASFA_CV = new JLabel();
-		 ASFA_CV.setIcon(ASFA[4]);
-		 panel.add(ASFA_CV);
-		 ASFA_CV.setBounds(getScale(325), getScale(360), getScale(60), getScale(60));
 	}
 }
