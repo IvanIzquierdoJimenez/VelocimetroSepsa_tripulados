@@ -250,16 +250,6 @@ public class Pantalla extends JFrame{
 			p.updateModo(y);
 			Thread.sleep(350);
 		}
-		
-		for (int z = 0; z <= ASFA.length; z++) 
-		{
-			updateASFA(z, 1);
-		}
-		Thread.sleep(1000);
-		for (int z = ASFA.length; z >= 0; z--)
-		{
-			updateASFA(z, 0);
-		}
 		return true;
 	}
 	public void PanelDisplay()

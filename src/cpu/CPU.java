@@ -1,5 +1,6 @@
 package cpu;
 
+import dmi.AWS;
 import dmi.Archivo;
 import dmi.Client;
 import dmi.Pantalla;
