@@ -12,6 +12,7 @@ import javax.swing.border.Border;
 import javax.swing.plaf.BorderUIResource;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.TimerTask;
 
 public class Pantalla extends JFrame{
@@ -41,6 +42,13 @@ public class Pantalla extends JFrame{
 	JLabel ASFA_Parada = new JLabel();
 	JLabel ASFA_VL = new JLabel();
 	JLabel ASFA_CV = new JLabel();
+	JLabel ASFA_Eficacia = new JLabel(); 
+	JLabel ASFA_Rec = new JLabel();
+	JLabel ASFA_Alarma = new JLabel();
+	JLabel ASFA_Rearme = new JLabel();
+	JLabel ASFA_RebaseAut = new JLabel();
+	JLabel ASFA_Soneria = new JLabel();
+	JLabel ASFA_Conex = new JLabel();
 	float scale = /*1.3f*/ 1f;
 	public static Archivo arc = new Archivo();
 	int getScale(double val)
@@ -50,17 +58,15 @@ public class Pantalla extends JFrame{
 	public Pantalla(int vmax) {
 		 setTitle("VELOCIMETRO");
 		 setSize(getScale(465), getScale(550));
+		 setBackground(Color.BLACK);
 		 //setUndecorated(true);
 		 setVisible(true);
 		 setResizable(false);
 		 //setExtendedState(JFrame.MAXIMIZED_BOTH);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
-		 //setLayout(null);
 		 v_max = vmax;
 		 add(panel);
-		 //add(menu);
 		 PanelDisplay();
-		 //PanelMenu();
 	}
 	public void updateReal(float curr)
 	{
@@ -101,7 +107,7 @@ public class Pantalla extends JFrame{
 				ASFA_Frenar.setIcon(ASFA[0]);
 				ASFA_Frenar.setVisible(true);
 				panel.add(ASFA_Frenar);
-				ASFA_Frenar.setBounds(getScale(65), getScale(360), getScale(60), getScale(60));
+				ASFA_Frenar.setBounds(getScale(20), getScale(360), getScale(60), getScale(60));
 			}
 			else if(status == 0) ASFA_Frenar.setVisible(false);
 			break;
@@ -111,7 +117,7 @@ public class Pantalla extends JFrame{
 				ASFA_VLC.setIcon(ASFA[1]);
 				ASFA_VLC.setVisible(true);
 				panel.add(ASFA_VLC);
-				ASFA_VLC.setBounds(getScale(130), getScale(360), getScale(60), getScale(60));
+				ASFA_VLC.setBounds(getScale(90), getScale(360), getScale(60), getScale(60));
 			}
 			else if(status == 0) ASFA_VLC.setVisible(false);
 			break;
@@ -121,7 +127,7 @@ public class Pantalla extends JFrame{
 				ASFA_Parada.setIcon(ASFA[2]);
 				ASFA_Parada.setVisible(true);
 				panel.add(ASFA_Parada);
-				ASFA_Parada.setBounds(getScale(195), getScale(360), getScale(60), getScale(60));
+				ASFA_Parada.setBounds(getScale(160), getScale(360), getScale(60), getScale(60));
 			}
 			else if(status == 0) ASFA_Parada.setVisible(false);
 			break;
@@ -131,7 +137,7 @@ public class Pantalla extends JFrame{
 				ASFA_VL.setIcon(ASFA[3]);
 				ASFA_VL.setVisible(true);
 				panel.add(ASFA_VL);
-				ASFA_VL.setBounds(getScale(260), getScale(360), getScale(60), getScale(60));
+				ASFA_VL.setBounds(getScale(230), getScale(360), getScale(60), getScale(60));
 			}
 			else if(status == 0) ASFA_VL.setVisible(false);
 			break;
@@ -139,12 +145,91 @@ public class Pantalla extends JFrame{
 			if(status == 1)
 			{
 				ASFA_CV.setIcon(ASFA[4]);
+				ASFA_CV.setVisible(true);
 				panel.add(ASFA_CV);
-				ASFA_CV.setBounds(getScale(325), getScale(360), getScale(60), getScale(60));
+				ASFA_CV.setBounds(getScale(300), getScale(360), getScale(60), getScale(60));
 			}
 			else if(status == 0) ASFA_CV.setVisible(false);
 			break;
+			
+		case 5:
+			if(status == 1)
+			{
+				ASFA_Eficacia.setIcon(ASFA[5]);
+				ASFA_Eficacia.setVisible(true);
+				panel.add(ASFA_Eficacia);
+				ASFA_Eficacia.setBounds(getScale(370), getScale(360), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Eficacia.setVisible(false);
+			break;
+			
+		case 6:
+			if(status == 1)
+			{
+				ASFA_Rec.setIcon(ASFA[6]);
+				ASFA_Rec.setVisible(true);
+				panel.add(ASFA_Rec);
+				ASFA_Rec.setBounds(getScale(20), getScale(430), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Rec.setVisible(false);
+			break;
+		
+		case 7:
+			if(status == 1)
+			{
+				ASFA_Alarma.setIcon(ASFA[7]);
+				ASFA_Alarma.setVisible(true);
+				panel.add(ASFA_Alarma);
+				ASFA_Alarma.setBounds(getScale(90), getScale(430), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Alarma.setVisible(false);
+			break;
+			
+		case 8:
+			if(status == 1)
+			{
+				ASFA_Rearme.setIcon(ASFA[8]);
+				ASFA_Rearme.setVisible(true);
+				panel.add(ASFA_Rearme);
+				ASFA_Rearme.setBounds(getScale(160), getScale(430), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Rearme.setVisible(false);
+			break;
+			
+		case 9:
+			if(status == 1)
+			{
+				ASFA_RebaseAut.setIcon(ASFA[9]);
+				ASFA_RebaseAut.setVisible(true);
+				panel.add(ASFA_RebaseAut);
+				ASFA_RebaseAut.setBounds(getScale(230), getScale(430), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_RebaseAut.setVisible(false);
+			break;
+			
+		case 10:
+			if(status == 1)
+			{
+				ASFA_Soneria.setIcon(ASFA[10]);
+				ASFA_Soneria.setVisible(true);
+				panel.add(ASFA_Soneria);
+				ASFA_Soneria.setBounds(getScale(300), getScale(430), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Soneria.setVisible(false);
+			break;
+			
+		case 11:
+			if(status == 1)
+			{
+				ASFA_Conex.setIcon(ASFA[11]);
+				ASFA_Conex.setVisible(true);
+				panel.add(ASFA_Conex);
+				ASFA_Conex.setBounds(getScale(370), getScale(430), getScale(60), getScale(60));
+			}
+			else if(status == 0) ASFA_Conex.setVisible(false);
+			break;
 		}
+		
 	}
 	public boolean TestInit(Pantalla p) throws InterruptedException
 	{
@@ -165,6 +250,16 @@ public class Pantalla extends JFrame{
 			p.updateModo(y);
 			Thread.sleep(350);
 		}
+		
+		for (int z = 0; z <= ASFA.length; z++) 
+		{
+			updateASFA(z, 1);
+		}
+		Thread.sleep(1000);
+		for (int z = ASFA.length; z >= 0; z--)
+		{
+			updateASFA(z, 0);
+		}
 		return true;
 	}
 	public void PanelDisplay()
@@ -173,7 +268,6 @@ public class Pantalla extends JFrame{
 		 panel.setSize(getScale(465), getScale(550));
 		 vel = new Velocidad(this);
 		 panel.setLayout(null);
-		 //menu.setLayout(null);
 		 panel.add(vel);
 		 vel.setBounds(0, 0, getScale(450), getScale(350));
 		 for(int i=0; i<=v_max; i+=10)
@@ -238,12 +332,19 @@ public class Pantalla extends JFrame{
 		 iconmodo[2] = new ImageIcon(getClass().getResource("/dmi/MO_19.jpg"));
 		 panel.add(dr);
 		 
-		 ASFA = new ImageIcon[5];
+		 ASFA = new ImageIcon[12];
 		 ASFA[0] = new ImageIcon(getClass().getResource("/dmi/Frenar.jpg"));
 		 ASFA[1] = new ImageIcon(getClass().getResource("/dmi/VLC.jpg"));
 		 ASFA[2] = new ImageIcon(getClass().getResource("/dmi/Parada.jpg"));
 		 ASFA[3] = new ImageIcon(getClass().getResource("/dmi/VL.jpg"));
 		 ASFA[4] = new ImageIcon(getClass().getResource("/dmi/CV.jpg"));
+		 ASFA[5] = new ImageIcon(getClass().getResource("/dmi/Eficacia.jpg"));
+		 ASFA[6] = new ImageIcon(getClass().getResource("/dmi/Rec.jpg"));
+		 ASFA[7] = new ImageIcon(getClass().getResource("/dmi/Alarma.jpg"));
+		 ASFA[8] = new ImageIcon(getClass().getResource("/dmi/RearmeFreno.jpg"));
+		 ASFA[9] = new ImageIcon(getClass().getResource("/dmi/RebaseAuto.jpg"));
+		 ASFA[10] = new ImageIcon(getClass().getResource("/dmi/Soneria.jpg"));
+		 ASFA[11] = new ImageIcon(getClass().getResource("/dmi/Conex.jpg"));
 		 
 		 JLabel vigil = new JLabel();
 		 vigil.setIcon(new ImageIcon(getClass().getResource("../dmi/vigilancia.JPG")));

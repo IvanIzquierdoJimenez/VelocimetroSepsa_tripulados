@@ -1,4 +1,5 @@
 package cpu;
+
 import dmi.Archivo;
 import dmi.Client;
 import dmi.Pantalla;
@@ -54,8 +55,10 @@ public class CPU {
 			}
 			else if(s.startsWith("ASFA_icon="))
 			{
-				String[] val = s.substring(10).split("");
-				p.updateASFA(Integer.parseInt(val[0]), Integer.parseInt(val[1]));
+				String[] icono = s.substring(10).split("_");
+				int iconoASFA = Integer.parseInt(icono[0]);
+				int status = Integer.parseInt(icono[1]);
+				p.updateASFA(iconoASFA, status);
 			}
 		}
 	}
