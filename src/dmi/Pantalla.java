@@ -62,31 +62,17 @@ public class Pantalla extends JFrame{
 	{
 		return (int)Math.round(val*scale);
 	}
-	public Pantalla(int vmax) {
+	public Pantalla(int vmax) throws InvalidFileFormatException, InterruptedException, IOException {
 		 setTitle("VELOCIMETRO");
+		 scale = Float.parseFloat(archivo.ReadConfig("Config", "Escala"));
 		 setSize(getScale(465), getScale(550));
 		 setBackground(Color.BLACK);
-		 //setUndecorated(true);
+		 setUndecorated(Boolean.parseBoolean(archivo.ReadConfig("Config", "PantOcup")));
 		 setVisible(true);
 		 setResizable(false);
 		 //setExtendedState(JFrame.MAXIMIZED_BOTH);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 v_max = vmax;
-		 try {
-			scale = Float.parseFloat(archivo.ReadConfig("Config", "Escala"));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidFileFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		 add(panel);
 		 PanelDisplay();
 	}
