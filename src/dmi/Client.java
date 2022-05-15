@@ -20,7 +20,7 @@ public class Client {
 		{
 			try
 			{
-				s = new Socket(arc.ReadConfig("Config", "IP"), 5090); //Cambia el puerto
+				s = new Socket(arc.ReadConfig("Config", "IP"), 5090); //Cambia el puerto (Pero el que viene por defecto se conecta automaticamente aunque no se sepa la IP)
 			}
 			catch (IOException e)
 			{
