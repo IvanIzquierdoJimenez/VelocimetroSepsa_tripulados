@@ -50,7 +50,6 @@ public class Pantalla extends JFrame{
 	JLabel ASFA_Soneria = new JLabel();
 	JLabel ASFA_Conex = new JLabel();
 	float scale = /*1.3f*/ 1f;
-	public static Archivo arc = new Archivo();
 	int getScale(double val)
 	{
 		return (int)Math.round(val*scale);

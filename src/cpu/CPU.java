@@ -29,7 +29,7 @@ public class CPU {
 		if(p.TestInit(p) == true);
 		else return;
 		Thread.sleep(100);
-		p.updateModo(Integer.parseInt(arc.ReadConfig("Config", "Mode")));
+		p.updateModo(Integer.parseInt(arc.ReadConfig("Config", "Modo")));
 		p.updateSymbol(0);
 		p.updateLevel(0);
 		while(true)
