@@ -11,12 +11,17 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.plaf.BorderUIResource;
 
+import org.ini4j.InvalidFileFormatException;
+
 import java.awt.*;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.TimerTask;
 
 public class Pantalla extends JFrame{
 
+	Archivo archivo = new Archivo();
+	
 	int AngIni = -29;
 	int Ang = 238;
 	int div = 1;
@@ -51,7 +56,8 @@ public class Pantalla extends JFrame{
 	JLabel ASFA_RebaseAut = new JLabel();
 	JLabel ASFA_Soneria = new JLabel();
 	JLabel ASFA_Conex = new JLabel();
-	float scale = /*1f*/ 1f;
+	//float scale = /*1f*/ 1f;
+	float scale = 0;
 	int getScale(double val)
 	{
 		return (int)Math.round(val*scale);
@@ -66,6 +72,21 @@ public class Pantalla extends JFrame{
 		 //setExtendedState(JFrame.MAXIMIZED_BOTH);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 v_max = vmax;
+		 try {
+			scale = Float.parseFloat(archivo.ReadConfig("Config", "Escala"));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFileFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 add(panel);
 		 PanelDisplay();
 	}
