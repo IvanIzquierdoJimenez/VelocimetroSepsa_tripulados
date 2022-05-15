@@ -70,7 +70,7 @@ public class Pantalla extends JFrame{
 		 setUndecorated(Boolean.parseBoolean(archivo.ReadConfig("Config", "PantOcup")));
 		 setVisible(true);
 		 setResizable(false);
-		 //setExtendedState(JFrame.MAXIMIZED_BOTH);
+		 if(Boolean.parseBoolean(archivo.ReadConfig("Config", "PantComp")) == true) setExtendedState(JFrame.MAXIMIZED_BOTH);
 		 setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 v_max = vmax;
 		 add(panel);
