@@ -1,6 +1,7 @@
 package cpu;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 import org.ini4j.InvalidFileFormatException;
 
@@ -17,7 +18,6 @@ public class CPU {
 	}
 	
 	private static void cpu_main() throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException {
-		//String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
 		Pantalla p = new Pantalla(Integer.parseInt(arc.ReadConfig("Config", "VelMax")));
 		Client c = new Client();
 		c.sendData("register(speed)");
@@ -26,6 +26,7 @@ public class CPU {
 		c.sendData("register(symbol)");
 		c.sendData("register(level)");
 		c.sendData("register(ASFA_icon)");
+		c.sendData("register(AWS_icon)");
 		if(p.TestInit(p) == true);
 		else return;
 		Thread.sleep(100);
@@ -62,6 +63,13 @@ public class CPU {
 				int iconoASFA = Integer.parseInt(icono[0]);
 				int status = Integer.parseInt(icono[1]);
 				p.updateASFA(iconoASFA, status);
+			}
+			else if(s.startsWith("AWS_icon="))
+			{
+				String[] icono = s.substring(9).split("");
+				int iconoAWS = Integer.parseInt(icono[0]);
+				int status = Integer.parseInt(icono[1]);
+				p.updateAWS(iconoAWS, status);
 			}
 		}
 	}

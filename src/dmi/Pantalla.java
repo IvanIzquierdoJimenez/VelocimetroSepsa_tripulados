@@ -37,6 +37,8 @@ public class Pantalla extends JFrame{
 	Icon[] iconmodo;
 	Icon[] level_s;
 	Icon[] ASFA;
+	Icon[] AWS;
+	JLabel AWS_Sunflower = new JLabel();
 	JLabel ASFA_Frenar = new JLabel();
 	JLabel ASFA_VLC = new JLabel();
 	JLabel ASFA_Parada = new JLabel();
@@ -49,7 +51,7 @@ public class Pantalla extends JFrame{
 	JLabel ASFA_RebaseAut = new JLabel();
 	JLabel ASFA_Soneria = new JLabel();
 	JLabel ASFA_Conex = new JLabel();
-	float scale = /*1.3f*/ 1f;
+	float scale = /*1f*/ 1f;
 	int getScale(double val)
 	{
 		return (int)Math.round(val*scale);
@@ -230,6 +232,43 @@ public class Pantalla extends JFrame{
 		}
 		
 	}
+	
+	public void updateAWS(int curr, int status) 
+	{
+		switch (curr) {
+		case 0:
+			if(status == 1)
+			{
+				AWS_Sunflower.setIcon(AWS[0]);
+				AWS_Sunflower.setVisible(true);
+				panel.add(AWS_Sunflower);
+				AWS_Sunflower.setBounds(165, 350, 150, 150);
+			}
+			else if(status == 0) AWS_Sunflower.setVisible(false);
+			break;
+		case 1:
+			if(status == 1)
+			{
+				AWS_Sunflower.setIcon(AWS[1]);
+				AWS_Sunflower.setVisible(true);
+				panel.add(AWS_Sunflower);
+				AWS_Sunflower.setBounds(165, 350, 150, 150);
+			}
+			else if(status == 0) AWS_Sunflower.setVisible(false);
+			break;
+		case 2:
+			if(status == 1)
+			{
+				AWS_Sunflower.setIcon(AWS[2]);
+				AWS_Sunflower.setVisible(true);
+				panel.add(AWS_Sunflower);
+				AWS_Sunflower.setBounds(165, 350, 150, 150);
+			}
+			else if(status == 0) AWS_Sunflower.setVisible(false);
+			break;
+		}
+	}
+	
 	public boolean TestInit(Pantalla p) throws InterruptedException
 	{
 		for(int i = 0; i <= v_max; i++)
@@ -334,6 +373,11 @@ public class Pantalla extends JFrame{
 		 ASFA[9] = new ImageIcon(getClass().getResource("/dmi/RebaseAuto.jpg"));
 		 ASFA[10] = new ImageIcon(getClass().getResource("/dmi/Soneria.jpg"));
 		 ASFA[11] = new ImageIcon(getClass().getResource("/dmi/Conex.jpg"));
+		 
+		 AWS = new ImageIcon[3];
+		 AWS[0] = new ImageIcon(getClass().getResource("/dmi/AWS_Sunflower_Isolated.png"));
+		 AWS[1] = new ImageIcon(getClass().getResource("/dmi/AWS_Sunflower_Reminder.png"));
+		 AWS[2] = new ImageIcon(getClass().getResource("/dmi/AWS_Sunflower_Clear.png"));
 		 
 		 JLabel vigil = new JLabel();
 		 vigil.setIcon(new ImageIcon(getClass().getResource("../dmi/vigilancia.JPG")));
