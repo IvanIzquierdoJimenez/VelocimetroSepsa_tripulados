@@ -16,15 +16,17 @@ public class Client {
 	Archivo arc = new Archivo();
 	public Client()
 	{
-		String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
 		while(s==null)
 		{
 			try
 			{
-				s = new Socket(Conf[2], 5090); //Cambia el puerto
+				s = new Socket(arc.ReadConfig("Config", "IP"), 5090); //Cambia el puerto
 			}
 			catch (IOException e)
 			{
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		while(!s.isConnected()) 

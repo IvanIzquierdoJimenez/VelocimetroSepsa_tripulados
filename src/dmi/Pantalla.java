@@ -295,7 +295,7 @@ public class Pantalla extends JFrame{
 		 modo.setForeground(Color.YELLOW);
 		 modo.setHorizontalAlignment(SwingConstants.CENTER);
 		 modo.setBorder(b);
-		 updateModo(1);
+		 updateModo(0);
 		 panel.add(modo);
 		 modo.setBounds(getScale(centx-60), getScale(centy), getScale(120), getScale(30));
 		 

@@ -1,6 +1,9 @@
 package cpu;
 
-import dmi.AWS;
+import java.io.IOException;
+
+import org.ini4j.InvalidFileFormatException;
+
 import dmi.Archivo;
 import dmi.Client;
 import dmi.Pantalla;
@@ -8,16 +11,15 @@ import dmi.Pantalla;
 public class CPU {
 	
 	public static Archivo arc = new Archivo();
-	public CPU() throws InterruptedException
+	public CPU() throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException
 	{
 		cpu_main();
 	}
 	
-	private static void cpu_main() throws InterruptedException {
-		String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
-		Pantalla p = new Pantalla(Integer.parseInt(Conf[0]));
+	private static void cpu_main() throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException {
+		//String[] Conf = arc.ReadConfig("../VelocimetroSepsa_tripulados/config.txt");
+		Pantalla p = new Pantalla(Integer.parseInt(arc.ReadConfig("Config", "VelMax")));
 		Client c = new Client();
-		p.updateModo(0);
 		c.sendData("register(speed)");
 		c.sendData("register(cruise_speed)");
 		c.sendData("register(mode)");
@@ -27,7 +29,7 @@ public class CPU {
 		if(p.TestInit(p) == true);
 		else return;
 		Thread.sleep(100);
-		p.updateModo(Integer.parseInt(Conf[1]));
+		p.updateModo(Integer.parseInt(arc.ReadConfig("Config", "Mode")));
 		p.updateSymbol(0);
 		p.updateLevel(0);
 		while(true)
@@ -64,7 +66,7 @@ public class CPU {
 		}
 	}
 	
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] args) throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException
 	{
 		CPU cpu = new CPU();
 	}

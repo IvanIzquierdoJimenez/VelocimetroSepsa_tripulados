@@ -1,18 +1,31 @@
 package dmi;
 
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class AWS {
+public class AWS extends JPanel{
 	
 	JLabel AWSSunflower = new JLabel();
-	Pantalla pantalla = new Pantalla(80);
+	public float scale = 0;
+	
+	int getScale(double val)
+	{
+		return (int)Math.round(val*scale);
+	}
+	
 	public AWS() {
-		
-		AWSSunflower.setIcon(new ImageIcon(getClass().getResource("/dmi/")));
+		setSize(getScale(200), getScale(100));
+		setBackground(Color.BLACK);
+		AWS_Sunflower();
+	}
+	
+	public void AWS_Sunflower() {
+		AWSSunflower.setIcon(new ImageIcon(getClass().getResource("/dmi/AWS_Sunflower_Isolated.png")));
 		AWSSunflower.setVisible(true);
-		pantalla.panel.add(AWSSunflower);
-		AWSSunflower.setBounds(pantalla.getScale(370), pantalla.getScale(430), pantalla.getScale(60), pantalla.getScale(60));
-		
+		add(AWSSunflower);
+		AWSSunflower.setBounds(getScale(100), getScale(50), getScale(60), getScale(60));
 	}
 }
