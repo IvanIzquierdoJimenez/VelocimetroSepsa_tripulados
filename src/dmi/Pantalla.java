@@ -1,5 +1,6 @@
 package dmi;
 
+import javax.management.loading.PrivateClassLoader;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,9 +15,12 @@ import javax.swing.plaf.BorderUIResource;
 import org.ini4j.InvalidFileFormatException;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class Pantalla extends JFrame{
 
@@ -39,6 +43,11 @@ public class Pantalla extends JFrame{
 	Border c;
 	Border rect;
 	JPanel panel = new JPanel();
+	public JLabel Init;
+	Thread t;
+	Menu menu; 
+	private int ind;
+	
 	Icon[] iconmodo;
 	Icon[] level_s;
 	Icon[] ASFA;
@@ -63,9 +72,10 @@ public class Pantalla extends JFrame{
 		return (int)Math.round(val*scale);
 	}
 	public Pantalla(int vmax) throws InvalidFileFormatException, InterruptedException, IOException {
+		menu = new Menu();
 		 setTitle("VELOCIMETRO");
 		 scale = Float.parseFloat(archivo.ReadConfig("Config", "Escala"));
-		 setSize(getScale(465), getScale(550));
+		 setSize(getScale(465), getScale(650));
 		 setBackground(Color.BLACK);
 		 setUndecorated(Boolean.parseBoolean(archivo.ReadConfig("Config", "PantOcup")));
 		 setVisible(true);
@@ -76,6 +86,8 @@ public class Pantalla extends JFrame{
 		 add(panel);
 		 PanelDisplay();
 	}
+	public Pantalla() {};
+	
 	public void updateReal(float curr)
 	{
 		v_act = curr;
@@ -276,6 +288,31 @@ public class Pantalla extends JFrame{
 		}
 	}
 	
+	public class initSecurity extends Thread implements Runnable{
+		
+		public void run() {
+			try {
+				for (int i = 0; i < ASFA.length; i++) {
+					updateASFA(i, 1);
+				}
+				sleep(1000);
+				for (int i = 0; i < ASFA.length; i++) {
+					updateASFA(i, 0);
+				}
+				sleep(1000);
+				for (int i = 0; i < AWS.length; i++) {
+					updateAWS(i, 1);
+					sleep(500);
+					updateAWS(i, 0);
+				}
+				sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public boolean TestInit(Pantalla p) throws InterruptedException
 	{
 		for(int i = 0; i <= v_max; i++)
@@ -295,16 +332,26 @@ public class Pantalla extends JFrame{
 			p.updateModo(y);
 			Thread.sleep(350);
 		}
+		
 		return true;
 	}
+	
+	public void TestASFA() throws InterruptedException 
+	{
+		for (int i = 0; i < ASFA.length; i++) {
+			updateASFA(i, 1);
+		}
+	}
+	
 	public void PanelDisplay()
 	{
+		
 		 panel.setBackground(Color.BLACK);
-		 panel.setSize(getScale(465), getScale(550));
+		 panel.setSize(getScale(465), getScale(600));
 		 vel = new Velocidad(this);
 		 panel.setLayout(null);
 		 panel.add(vel);
-		 vel.setBounds(0, 0, getScale(450), getScale(350));
+		 vel.setBounds(0, 0, getScale(450), getScale(600));
 		 for(int i=0; i<=v_max; i+=10)
 		 {
 			 JLabel j = new JLabel(Integer.toString(i));
@@ -391,5 +438,30 @@ public class Pantalla extends JFrame{
 		 panel.add(vigil);
 		 vigil.setBounds(getScale(10), getScale(10), getScale(50), getScale(44));
 		 
+		 Init = new JLabel("TEST");
+		 Init.setHorizontalAlignment(SwingConstants.CENTER);
+		 Init.setFont(new Font("Tahoma", Font.BOLD, 16));
+		 Init.setForeground(Color.WHITE);
+		 Init.setBounds(20, 550, 50, 50);
+		 Init.setBorder( BorderFactory.createLineBorder(Color.WHITE));
+		 panel.add(Init);
+			
+		 JLabel MenuAWS = new JLabel("AWS");
+		 MenuAWS.setHorizontalAlignment(SwingConstants.CENTER);
+		 MenuAWS.setForeground(Color.WHITE);
+		 MenuAWS.setFont(new Font("Tahoma", Font.BOLD, 16));
+		 MenuAWS.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		 MenuAWS.setBounds(80, 550, 50, 50);
+		 panel.add(MenuAWS);
+		 
+		 Init.addMouseListener(new MouseAdapter() {
+			 public void mouseClicked(MouseEvent event) 
+			 {
+				 Runnable r = new initSecurity();
+				 t = new Thread(r);
+				 t.start();
+			 }
+		});
 	}
+	
 }

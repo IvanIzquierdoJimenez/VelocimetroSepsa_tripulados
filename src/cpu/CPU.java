@@ -1,6 +1,9 @@
 package cpu;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.EventListener;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 import org.ini4j.InvalidFileFormatException;
@@ -12,13 +15,13 @@ import dmi.Pantalla;
 public class CPU {
 	
 	public static Archivo arc = new Archivo();
-	public CPU() throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException
+	public CPU() throws NumberFormatException, InvalidFileFormatException, InterruptedException, IOException
 	{
 		cpu_main();
 	}
 	
 	private static void cpu_main() throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException {
-		Pantalla p = new Pantalla(Integer.parseInt(arc.ReadConfig("Config", "VelMax")));
+		final Pantalla p = new Pantalla(Integer.parseInt(arc.ReadConfig("Config", "VelMax")));
 		Client c = new Client();
 		c.sendData("register(speed)");
 		c.sendData("register(cruise_speed)");
@@ -71,11 +74,14 @@ public class CPU {
 				int status = Integer.parseInt(icono[1]);
 				p.updateAWS(iconoAWS, status);
 			}
+			
 		}
+		
 	}
 	
 	public static void main(String[] args) throws InterruptedException, NumberFormatException, InvalidFileFormatException, IOException
 	{
 		CPU cpu = new CPU();
+		
 	}
 }
