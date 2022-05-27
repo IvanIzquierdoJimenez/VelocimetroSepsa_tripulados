@@ -17,6 +17,7 @@ import org.ini4j.InvalidFileFormatException;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.TimerTask;
@@ -46,7 +47,7 @@ public class Pantalla extends JFrame{
 	public JLabel Init;
 	Thread t;
 	Menu menu; 
-	private int ind;
+	private boolean InitDisplay = false;
 	
 	Icon[] iconmodo;
 	Icon[] level_s;
@@ -295,17 +296,18 @@ public class Pantalla extends JFrame{
 				for (int i = 0; i < ASFA.length; i++) {
 					updateASFA(i, 1);
 				}
-				sleep(1000);
+				Thread.sleep(1000);
 				for (int i = 0; i < ASFA.length; i++) {
 					updateASFA(i, 0);
 				}
-				sleep(1000);
+				Thread.sleep(1000);
 				for (int i = 0; i < AWS.length; i++) {
 					updateAWS(i, 1);
-					sleep(500);
+					Thread.sleep(500);
 					updateAWS(i, 0);
 				}
-				sleep(1000);
+				Thread.sleep(1000);
+				TestInit();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -313,29 +315,39 @@ public class Pantalla extends JFrame{
 		}
 	}
 	
-	public boolean TestInit(Pantalla p) throws InterruptedException
+	public boolean TestInit() throws InterruptedException
 	{
 		for(int i = 0; i <= v_max; i++)
 		{
-			p.updateReal(i);
-			p.updatePrefijada(i);
+			updateReal(i);
+			updatePrefijada(i);
 			Thread.sleep(6);
 		}
 		for(int i = v_max; i >= 0; i--)
 		{
-			p.updateReal(i);
-			p.updatePrefijada(i);
+			updateReal(i);
+			updatePrefijada(i);
 			Thread.sleep(6);
 		}
 		for(int y = 0; y <= modos.length - 1; y++)
 		{
-			p.updateModo(y);
+			updateModo(y);
 			Thread.sleep(350);
 		}
-		
+		updateModo(0);
+		for(int i = 0; i < iconmodo.length; i++) {
+			updateSymbol(i);
+			Thread.sleep(350);
+		}
+		updateSymbol(0);
+		for (int i = 0; i < level_s.length; i++) {
+			updateLevel(i);
+			Thread.sleep(350);
+		}
+		updateLevel(0);
 		return true;
 	}
-	
+
 	public void TestASFA() throws InterruptedException 
 	{
 		for (int i = 0; i < ASFA.length; i++) {
@@ -347,11 +359,11 @@ public class Pantalla extends JFrame{
 	{
 		
 		 panel.setBackground(Color.BLACK);
-		 panel.setSize(getScale(465), getScale(600));
+		 panel.setSize(getScale(465), getScale(550));
 		 vel = new Velocidad(this);
 		 panel.setLayout(null);
 		 panel.add(vel);
-		 vel.setBounds(0, 0, getScale(450), getScale(600));
+		 vel.setBounds(0, 0, getScale(450), getScale(550));
 		 for(int i=0; i<=v_max; i+=10)
 		 {
 			 JLabel j = new JLabel(Integer.toString(i));
@@ -438,30 +450,41 @@ public class Pantalla extends JFrame{
 		 panel.add(vigil);
 		 vigil.setBounds(getScale(10), getScale(10), getScale(50), getScale(44));
 		 
-		 Init = new JLabel("TEST");
+		 JLabel Init = new JLabel("TEST");
 		 Init.setHorizontalAlignment(SwingConstants.CENTER);
 		 Init.setFont(new Font("Tahoma", Font.BOLD, 16));
 		 Init.setForeground(Color.WHITE);
+		 panel.add(Init);
 		 Init.setBounds(20, 550, 50, 50);
 		 Init.setBorder( BorderFactory.createLineBorder(Color.WHITE));
-		 panel.add(Init);
 			
-		 JLabel MenuAWS = new JLabel("AWS");
-		 MenuAWS.setHorizontalAlignment(SwingConstants.CENTER);
-		 MenuAWS.setForeground(Color.WHITE);
-		 MenuAWS.setFont(new Font("Tahoma", Font.BOLD, 16));
-		 MenuAWS.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		 MenuAWS.setBounds(80, 550, 50, 50);
-		 panel.add(MenuAWS);
+		 JLabel MenuCONF = new JLabel("CONF");
+		 MenuCONF.setHorizontalAlignment(SwingConstants.CENTER);
+		 MenuCONF.setForeground(Color.WHITE);
+		 MenuCONF.setFont(new Font("Tahoma", Font.BOLD, 16));
+		 MenuCONF.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		 panel.add(MenuCONF);
+		 MenuCONF.setBounds(80, 550, 50, 50);
 		 
 		 Init.addMouseListener(new MouseAdapter() {
 			 public void mouseClicked(MouseEvent event) 
 			 {
-				 Runnable r = new initSecurity();
-				 t = new Thread(r);
-				 t.start();
+				 if(!InitDisplay) {
+					 Runnable r = new initSecurity();
+					 t = new Thread(r);
+					 t.start();
+					 if(t.isAlive()) {
+						 InitDisplay = true;
+					 }
+				 }
 			 }
-		});
+		 });
+		 
+		 MenuCONF.addMouseListener(new MouseAdapter() {
+			 public void mouseClicked(MouseEvent event) {
+				 
+			 }
+		 });
 	}
 	
 }

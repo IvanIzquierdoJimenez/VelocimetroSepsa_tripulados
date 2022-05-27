@@ -30,7 +30,7 @@ public class CPU {
 		c.sendData("register(level)");
 		c.sendData("register(ASFA_icon)");
 		c.sendData("register(AWS_icon)");
-		if(p.TestInit(p) == true);
+		if(p.TestInit() == true);
 		else return;
 		Thread.sleep(100);
 		p.updateModo(Integer.parseInt(arc.ReadConfig("Config", "Modo")));
